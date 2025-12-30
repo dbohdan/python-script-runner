@@ -50,9 +50,12 @@ The order is:
 3. [Hatch](https://github.com/pypa/hatch)
 4. [pip-run](https://github.com/jaraco/pip-run)
 
+If no known runner is found, the meta-runner exits with status 127.
+
 ## Requirements
 
-POSIX shell to run. Python 3.10 or later for testing.
+POSIX shell to run.
+Python 3.10 or later for testing.
 
 ## Installation
 

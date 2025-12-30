@@ -16,3 +16,7 @@ fi
 if command -v pip-run >/dev/null; then
     exec pip-run -- "$@"
 fi
+
+echo 'python-script-runner: No compatible Python script runner found.' >&2
+echo 'Please install one of: uv, pipx, Hatch, or pip-run.' >&2
+exit 127
