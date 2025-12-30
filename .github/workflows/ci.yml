@@ -1,0 +1,79 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  bsd:
+    runs-on: ${{ matrix.os.host }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - name: freebsd
+            architecture: x86-64
+            version: '15.0'
+            host: ubuntu-latest
+
+          - name: netbsd
+            architecture: x86-64
+            version: '10.1'
+            host: ubuntu-latest
+
+          - name: openbsd
+            architecture: x86-64
+            version: '7.8'
+            host: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Run CI script on ${{ matrix.os.name }}
+        uses: cross-platform-actions/action@v0.32.0
+        with:
+          operating_system: ${{ matrix.os.name }}
+          architecture: ${{ matrix.os.architecture }}
+          version: ${{ matrix.os.version }}
+          shell: bash
+          run: |
+            set -x
+
+            case "$(uname)" in
+              FreeBSD)
+                sudo pkg install -y python3
+                ;;
+
+              NetBSD)
+                sudo pkgin -y install python312
+
+                for src in /usr/pkg/bin/python3.??; do
+                  :
+                done
+                sudo ln -s "$src" /usr/pkg/bin/python3
+                ;;
+
+              OpenBSD)
+                sudo pkg_add -I python%3
+                ;;
+            esac
+
+            python3 test.py
+
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v6
+
+    - name: Test
+      run: |
+        python3 test.py
+
+  mac:
+    runs-on: macos-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v6
+
+    - name: Build and test
+      run: |
+        python3 test.py
