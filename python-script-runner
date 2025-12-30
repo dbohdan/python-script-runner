@@ -2,11 +2,11 @@
 set -eu
 
 if command -v uv >/dev/null; then
-    exec uv run --quiet --script -- "$@"
+    exec uv run --script -- "$@"
 fi
 
 if command -v pipx >/dev/null; then
-    exec pipx run --path --quiet -- "$@"
+    exec pipx run --path -- "$@"
 fi
 
 if command -v hatch >/dev/null; then
@@ -18,5 +18,5 @@ if command -v pip-run >/dev/null; then
 fi
 
 echo 'python-script-runner: No compatible Python script runner found.' >&2
-echo 'Please install one of: uv, pipx, Hatch, or pip-run.' >&2
+echo 'Please install one of: uv, pipx, Hatch, pip-run.' >&2
 exit 127

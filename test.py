@@ -73,7 +73,7 @@ print("test")
             output_lines = result.stdout.splitlines()
             self.assertEqual(
                 output_lines,
-                ["run", "--quiet", "--script", "--", str(test_script), "arg1", "arg2"],
+                ["run", "--script", "--", str(test_script), "arg1", "arg2"],
             )
 
     def test_pipx(self):
@@ -102,7 +102,7 @@ print("test")
             output_lines = result.stdout.splitlines()
             self.assertEqual(
                 output_lines,
-                ["run", "--path", "--quiet", "--", str(test_script), "arg1", "arg2"],
+                ["run", "--path", "--", str(test_script), "arg1", "arg2"],
             )
 
     def test_hatch(self):
@@ -189,7 +189,7 @@ print("test")
             output_lines = result.stdout.splitlines()
             self.assertEqual(
                 output_lines,
-                ["run", "--quiet", "--script", "--", str(test_script), "foo"],
+                ["run", "--script", "--", str(test_script), "foo"],
             )
 
     def test_no_runners(self):
