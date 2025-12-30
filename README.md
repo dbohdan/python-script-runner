@@ -1,7 +1,7 @@
 # python-script-runner
 
 **python-script-runner** is a small POSIX shell script that provides a single [shebang line](https://en.wikipedia.org/wiki/Shebang_(Unix)) for Python scripts with [inline script metadata](https://packaging.python.org/en/latest/specifications/inline-script-metadata/) (PEP 723).
-It automatically invokes the first known script runner you have installed.
+The shell script automatically invokes the first Python script runner it knows available in [`PATH`](https://en.wikipedia.org/wiki/PATH_(variable)).
 
 ## Example
 
@@ -50,7 +50,7 @@ The order is:
 3. [Hatch](https://github.com/pypa/hatch)
 4. [pip-run](https://github.com/jaraco/pip-run)
 
-If no known runner is found, the meta-runner exits with status 127.
+If no known runner is found, python-script-runner exits with status 127.
 
 ## Requirements
 
@@ -69,8 +69,8 @@ chmod +x ~/.local/bin/python-script-runner
 ## Limitations
 
 python-script-runner deliberately avoids configuration.
-It simply tries runners in a fixed order.
-Edit the script if you want to override the order.
+It only tries known runners in a fixed order.
+Edit the script if you want to add runners or override the order.
 
 ## License
 
