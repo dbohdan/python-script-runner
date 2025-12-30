@@ -21,6 +21,11 @@ def temp_runner_context():
         env_path = os.environ.get("PATH", "")
         temp_dir = Path(temp_dir_str)
 
+        # Necessary on OpenBSD.
+        os.symlink(shutil.which("printf"), temp_dir / "printf")
+
+        os.environ["PATH"] = temp_dir_str
+
         try:
             # Copy the script to the temporary directory.
             shutil.copy2(Path(__file__).parent / RUNNER, temp_dir / RUNNER)
@@ -55,9 +60,6 @@ print("test")
 """)
             test_script.chmod(SCRIPT_PERMS)
 
-            # Set `PATH` to only include `temp_dir` (no system runners).
-            os.environ["PATH"] = str(temp_dir)
-
             # Run the test script.
             result = subprocess.run(
                 [str(test_script), "arg1", "arg2"],
@@ -87,8 +89,6 @@ print("test")
 """)
             test_script.chmod(SCRIPT_PERMS)
 
-            os.environ["PATH"] = str(temp_dir)
-
             result = subprocess.run(
                 [str(test_script), "arg1", "arg2"],
                 check=False,
@@ -116,8 +116,6 @@ print("test")
 """)
             test_script.chmod(SCRIPT_PERMS)
 
-            os.environ["PATH"] = str(temp_dir)
-
             result = subprocess.run(
                 [str(test_script), "arg1", "arg2"],
                 check=False,
@@ -143,8 +141,6 @@ print("test")
 print("test")
 """)
             test_script.chmod(SCRIPT_PERMS)
-
-            os.environ["PATH"] = str(temp_dir)
 
             result = subprocess.run(
                 [str(test_script), "arg1", "arg2"],
@@ -174,8 +170,6 @@ print("test")
 """)
             test_script.chmod(SCRIPT_PERMS)
 
-            os.environ["PATH"] = str(temp_dir)
-
             result = subprocess.run(
                 [str(test_script), "foo"],
                 check=False,
@@ -201,8 +195,6 @@ print("test")
 print("test")
 """)
             test_script.chmod(SCRIPT_PERMS)
-
-            os.environ["PATH"] = str(temp_dir)
 
             result = subprocess.run(
                 [str(test_script)],
