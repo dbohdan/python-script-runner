@@ -21,8 +21,9 @@ def temp_runner_context():
         env_path = os.environ.get("PATH", "")
         temp_dir = Path(temp_dir_str)
 
-        # Necessary on OpenBSD.
-        os.symlink(shutil.which("printf"), temp_dir / "printf")
+        # `printf` is necessary on OpenBSD.
+        for command in ("basename", "printf"):
+            os.symlink(shutil.which(command), temp_dir / command)
 
         os.environ["PATH"] = temp_dir_str
 
