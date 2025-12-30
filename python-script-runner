@@ -1,0 +1,18 @@
+#! /bin/sh
+set -eu
+
+if command -v uv >/dev/null; then
+    exec uv run --quiet --script -- "$@"
+fi
+
+if command -v pipx >/dev/null; then
+    exec pipx run --path --quiet -- "$@"
+fi
+
+if command -v hatch >/dev/null; then
+    exec hatch run -- "$@"
+fi
+
+if command -v pip-run >/dev/null; then
+    exec pip-run -- "$@"
+fi
