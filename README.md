@@ -1,7 +1,7 @@
 # python-script-runner
 
-**python-script-runner** is a small POSIX shell script that provides a single [shebang line](https://en.wikipedia.org/wiki/Shebang_(Unix)) for Python scripts with [inline script metadata](https://packaging.python.org/en/latest/specifications/inline-script-metadata/) (PEP 723).
-The shell script automatically invokes the first Python script runner it knows available in [`PATH`](https://en.wikipedia.org/wiki/PATH_(variable)).
+**python-script-runner** is a POSIX shell script that provides a unified [shebang line](https://en.wikipedia.org/wiki/Shebang_(Unix)) for Python scripts with [inline script metadata](https://packaging.python.org/en/latest/specifications/inline-script-metadata/) (PEP 723).
+The shell script automatically invokes the first Python script runner it finds in [`PATH`](https://en.wikipedia.org/wiki/PATH_(variable)).
 
 ## Example
 
@@ -41,7 +41,7 @@ A script written for uv won't run on a system with only pipx and vice versa.
 Asking the user to edit the script is not user-friendly.
 
 The idea behind python-script-runner is to provide a single executable name to use.
-It tries a hardcoded list of popular PEP 723-compatible runners ordered by GitHub stars (sorry) and executes your script with the first runner it finds.
+It tries a hardcoded list of popular PEP 723-compatible runners (ordered by GitHub stars as a proxy for popularity) and executes your script with the first runner it finds.
 
 The order is:
 
@@ -54,12 +54,13 @@ If no known runner is found, python-script-runner exits with status 127.
 
 ## Requirements
 
-POSIX shell to run.
-Python 3.10 or later for testing.
+- POSIX shell
+- At least one supported runner
+- Python &ge; 3.10 for testing
 
 ## Installation
 
-Copy the `python-script-runner` script to a directory in your `PATH`, like `~/.local/bin` or `/usr/local/bin`.
+Copy the script to a directory in your `PATH`, like `~/.local/bin/` or `/usr/local/bin/`.
 
 ```sh
 curl -o ~/.local/bin/python-script-runner https://raw.githubusercontent.com/dbohdan/python-script-runner/master/python-script-runner
@@ -70,7 +71,7 @@ chmod +x ~/.local/bin/python-script-runner
 
 python-script-runner deliberately avoids configuration.
 It only tries known runners in a fixed order.
-Edit the script if you want to add runners or override the order.
+Edit the script if you want to add runners or change the order.
 
 ## License
 
