@@ -9,15 +9,15 @@ The shell script automatically invokes the first Python script runner it finds i
 #! /usr/bin/env python-script-runner
 # /// script
 # dependencies = [
-#   "httpx",
+#   "requests",
 #   "rich",
 # ]
 # ///
 
-import httpx
+import requests
 from rich import print
 
-ip = httpx.get("https://icanhazip.com").text.strip()
+ip = requests.get("https://icanhazip.com").text.strip()
 print(f"Your public IP address is [bold]{ip}[/bold]")
 ```
 
